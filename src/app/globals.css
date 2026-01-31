@@ -1,0 +1,198 @@
+:root {
+    --bg-color: #f8f9fa;
+    /* Lighter, cleaner grey */
+    --card-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    /* Darker black for better contrast */
+    --text-secondary: #5f6368;
+    --accent-color: #3b82f6;
+    /* Modern Blue */
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    /* Dark text on light overlay */
+    letter-spacing: -0.025em;
+}
+
+.site-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    font-weight: 500;
+}
+
+main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px 60px 24px;
+}
+
+/* Hero Banner */
+.hero-banner {
+    width: 100%;
+    height: 350px;
+    background-color: #ffd1dc;
+    /* Fallback */
+    background-image: url('https://images.unsplash.com/photo-1505322022379-7c3353ee6291?q=80&w=2000&auto=format&fit=crop');
+    /* Cute childhood/family warmth placeholder */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.hero-overlay {
+    background: transparent;
+    padding: 30px 60px;
+    text-align: center;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+.year-section {
+    margin-bottom: 60px;
+}
+
+/* Styled Year Title - Full Width Bar Style */
+.year-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    background-color: var(--year-title-bg, #C23B82);
+    /* Use variable with Magenta fallback */
+    /* Magenta from user image */
+    padding: 12px 0;
+    margin-bottom: 32px;
+    text-align: center;
+    display: block;
+    /* Block instead of flex for bar look */
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove the old lines */
+.year-title::before,
+.year-title::after {
+    display: none;
+}
+
+.album-grid {
+    display: grid;
+    /* Responsive Grid: min 280px */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.album-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.album-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--hover-shadow);
+}
+
+.album-info-top {
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    text-align: center;
+}
+
+.album-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.album-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.album-description {
+    padding: 12px;
+    background: #fff;
+    min-height: 48px;
+    /* Visual footer space */
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.album-card:hover .album-thumb {
+    opacity: 0.95;
+    /* Subtle hover effect instead of scale to keep layout clean */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+        margin: 1.5rem 0;
+    }
+
+    .album-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .year-section {
+        margin-bottom: 40px;
+    }
+
+    .album-card:hover {
+        transform: translateY(-2px);
+    }
+}
