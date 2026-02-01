@@ -25,7 +25,7 @@ export default async function Home() {
 
       <div className="content-container">
         {albumData.map((yearGroup) => (
-          <YearSection key={yearGroup.year} yearGroup={yearGroup} />
+          <YearSection key={yearGroup.year} yearGroup={yearGroup} birthYear={2016} />
         ))}
       </div>
     </main>

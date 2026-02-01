@@ -28,7 +28,7 @@ export default async function RaenieHome() {
             <div className="content-container">
                 {filteredData && filteredData.length > 0 ? (
                     filteredData.map((yearGroup: any) => (
-                        <YearSection key={yearGroup.year} yearGroup={yearGroup} />
+                        <YearSection key={yearGroup.year} yearGroup={yearGroup} birthYear={2020} />
                     ))
                 ) : (
                     <div style={{ textAlign: 'center', padding: '4rem' }}>No albums found.</div>
