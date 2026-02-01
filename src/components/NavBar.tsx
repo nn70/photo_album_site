@@ -5,21 +5,68 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+const toChineseNum = (num: number) => {
+  const chars = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+  if (num <= 10) return chars[num];
+  if (num < 20) return '十' + (num % 10 === 0 ? '' : chars[num % 10]);
+  return num; // Fallback for older
+};
+
 export default function NavBar() {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const isRaenie = pathname.includes('/raenie');
+  const startYear = isRaenie ? 2020 : 2016;
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
+
+  const handleYearScroll = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const year = e.target.value;
+    const element = document.getElementById(`year-${year}`);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+    // Reset selection so it can be clicked again if needed (visual preferance)
+    e.target.value = "";
+  };
 
   return (
     <header className="navbar">
       <div className="nav-container">
         <div className="nav-logo">
-          <span className="logo-icon">📸</span>
+          <span
+            className="logo-icon"
+            onClick={() => !session && signIn("google")}
+            style={{ cursor: !session ? 'pointer' : 'default' }}
+            title={!session ? "點擊登入" : ""}
+          >
+            📸
+          </span>
           <span className="logo-text">
-            {pathname.includes('/raenie') ? "寧寧的時光小屋" : "小赫的時光小屋"}
+            {isRaenie ? "寧寧的時光小屋" : "小赫的時光小屋"}
           </span>
         </div>
         <div className="nav-actions">
-          {session ? (
+          <div className="year-selector-wrapper">
+            <select onChange={handleYearScroll} className="btn-year-select" defaultValue="">
+              <option value="" disabled>📅選年份</option>
+              {years.map(year => {
+                const age = year - startYear;
+                const ageText = age >= 0 ? `(${toChineseNum(age)}歲)` : '';
+                return (
+                  <option key={year} value={year}>{year}年 {ageText}</option>
+                );
+              })}
+            </select>
+          </div>
+
+          {session && (
             <>
               <Link href="/admin" className={`nav-link ${pathname === '/admin' ? 'active' : ''}`}>
                 管理後台
@@ -35,12 +82,35 @@ export default function NavBar() {
                 <button onClick={() => signOut()} className="btn-auth btn-logout">登出</button>
               </div>
             </>
-          ) : (
-            <button onClick={() => signIn("google")} className="btn-auth btn-login">Google 登入</button>
           )}
         </div>
       </div>
       <style jsx>{`
+        /* ... existing styles ... */
+        .btn-year-select {
+            appearance: none;
+            background: #ffffff;
+            color: #555;
+            border: 1px solid #eee;
+            padding: 0.5rem 1.8rem 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            outline: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1rem;
+            font-family: inherit;
+        }
+        .btn-year-select:hover {
+            background-color: #fafafa;
+            color: #1a73e8;
+            stroke: #1a73e8; /* For SVG if consistent */
+        }
+        
         .navbar {
           background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque */
           backdrop-filter: blur(10px);
@@ -81,6 +151,7 @@ export default function NavBar() {
             background-clip: text;
             letter-spacing: -0.5px;
             text-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
         
         .logo-icon {
@@ -155,21 +226,6 @@ export default function NavBar() {
           transition: all 0.2s;
           box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .btn-login {
-            background: #ffffff;
-            color: #d1d5db; /* Very light gray */
-            box-shadow: none;
-            font-weight: 500;
-            font-size: 0.85rem;
-            border: 1px solid transparent;
-        }
-        .btn-login:hover {
-            background: #fafafa;
-            color: #9ca3af; /* Slightly darker on hover */
-            transform: none;
-            box-shadow: none;
-            border-color: #f3f4f6;
-        }
         .btn-logout {
             background: #f1f3f4;
             color: #5f6368;
@@ -182,23 +238,36 @@ export default function NavBar() {
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             .nav-container {
-                padding: 0 16px;
+                padding: 0 12px;
             }
-            
-            /* Logo text visible again based on user request */
-            /* .logo-text { display: none !important; } */
             
             .nav-logo {
                 margin-right: 0;
+                flex-shrink: 1; /* Allow logo container to shrink if super tight */
+                min-width: 0;   /* enable flex item shrinking */
+            }
+            .logo-text {
+                font-size: 1.5rem; /* Maximize size */
+                overflow: hidden;
+                text-overflow: ellipsis; 
             }
             .logo-icon {
-                font-size: 1.5rem; /* Reset to normal size or keep slightly larger? User said 'recover text', let's keep icon normal to fit text */
+                font-size: 1.3rem; 
             }
             
-            /* Hide user profile to save space if needed */
             .nav-actions {
-                flex-grow: 1; 
+                flex-grow: 0; /* Stop taking too much space */
                 justify-content: flex-end;
+                gap: 0.5rem;
+                flex-shrink: 0;
+            }
+            
+            .btn-year-select {
+                width: 90px; /* Force fixed width */
+                padding: 0.4rem 1.4rem 0.4rem 0.6rem; 
+                font-size: 0.8rem;
+                background-position: right 0.3rem center;
+                text-overflow: ellipsis; /* Just in case */
             }
         }
       `}</style>

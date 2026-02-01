@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.vercel.photo_album_site.twa",
+            "sha256_cert_fingerprints": [
+                "F7:D3:E6:2C:D7:79:85:92:84:63:85:07:E6:2C:8E:FD:16:35:56:01:E1:0E:17:D5:AD:4E:CE:32:95:08:69:42"
+            ]
+        }
+    }
+]

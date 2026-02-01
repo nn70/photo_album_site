@@ -20,7 +20,7 @@ export default function YearSection({ yearGroup, birthYear }: { yearGroup: YearG
     }
 
     return (
-        <section className="year-section">
+        <section id={`year-${yearGroup.year}`} className="year-section">
             <h2 className="year-title">{title}</h2>
             <div className="album-grid">
                 {yearGroup.albums.map((album, index) => (
