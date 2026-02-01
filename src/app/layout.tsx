@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: "小赫與寧寧的時光小屋 Photo Album",
   manifest: "/manifest.json",
   icons: {
-    icon: "/icons/icon.jpg",
-    apple: "/icons/icon.jpg",
+    icon: "/icons/icon.png",
+    apple: "/icons/icon.png",
   },
   appleWebApp: {
     capable: true,
