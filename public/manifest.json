@@ -1,0 +1,21 @@
+{
+    "name": "赫寧來粉",
+    "short_name": "赫寧來粉",
+    "description": "小赫與寧寧的時光小屋 Photo Album",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "/icons/icon.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "/icons/icon.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }
+    ]
+}
