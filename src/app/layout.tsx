@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = {
-  title: "赫寧來粉",
+  title: "時光小屋",
   description: "小赫與寧寧的時光小屋 Photo Album",
   manifest: "/manifest.json",
   icons: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "赫寧來粉",
+    title: "時光小屋",
     statusBarStyle: "black-translucent",
   },
   viewport: {
