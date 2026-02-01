@@ -2,7 +2,9 @@
     "name": "時光小屋",
     "short_name": "時光小屋",
     "description": "小赫與寧寧的時光小屋 Photo Album",
-    "start_url": "https://photo-album-site.vercel.app/",
+    "id": "/",
+    "start_url": "/",
+    "orientation": "portrait",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
@@ -13,7 +15,7 @@
             "type": "image/png"
         },
         {
-            "src": "/icons/icon.png",
+            "src": "/icons/icon512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
